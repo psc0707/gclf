@@ -21,7 +21,7 @@ if ($pdoStatement->execute()) {
 	$filmInfos = $pdoStatement->fetch();
 }
 
-require 'html/header.php';
+require 'inc/view/header.php';;
 
 if (sizeof($filmInfos) > 0) {
 ?>
@@ -46,4 +46,4 @@ if (sizeof($filmInfos) > 0) {
 else {
 	echo 'ID non reconnu<br />';
 }
-require 'html/footer.php';
+require 'inc/view/footer.php';;

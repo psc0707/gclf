@@ -16,7 +16,7 @@ if ($pdoStatement && $pdoStatement->rowCount() > 0) {
 	$categorieList = $pdoStatement->fetchAll();
 }
 
-require 'html/header.php';
+require 'inc/view/header.php';;
 ?>
 
 <section>
@@ -35,4 +35,4 @@ require 'html/header.php';
 
 
 <?php
-require 'html/footer.php';
+require 'inc/view/footer.php';;

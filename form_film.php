@@ -191,7 +191,7 @@ if ($pdoStatement && $pdoStatement->rowCount() > 0) {
 	$supportsList = $pdoStatement->fetchAll();
 }
 
-require 'html/header.php';
+require 'inc/view/header.php';;
 ?>
 	<form action="" method="get">
 		<legend>Pré-remplir avec IMDb</legend>
@@ -280,4 +280,4 @@ require 'html/header.php';
 	</form>	
 <?php
 
-require 'html/footer.php';
+require 'inc/view/footer.php';;

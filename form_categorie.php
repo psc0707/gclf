@@ -71,7 +71,7 @@ if (isset($_GET['id'])) {
 	}
 }
 
-require 'html/header.php';
+require 'inc/view/header.php';;
 ?>
 	<section class="subHeader">
 		<h1>Gestion des catégories</h1>
@@ -105,4 +105,4 @@ require 'html/header.php';
 	</form>	
 
 <?php
-require 'html/footer.php';
+require 'inc/view/footer.php';;
