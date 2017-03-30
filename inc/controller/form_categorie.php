@@ -1,7 +1,5 @@
 <?php
 
-require 'inc/config.php';
-
 // Gestion du POST du formulaire
 if (!empty($_POST)) {
 	$cat_id = isset($_POST['cat_id']) ? intval($_POST['cat_id']) : 0;
@@ -32,14 +30,14 @@ if (!empty($_POST)) {
 	if ($pdoStatement->execute()) {
 		// Redirection après modif
 		if ($cat_id > 0) {
-			header('Location: ?id='.$cat_id);
+			header('Location:index.php?section=form_categorie&id='.$cat_id);
 			exit;
 		}
 		// Redirection après ajout
 		else {
 			// On va d'abord récupérer l'ID créé
 			$cat_id = $pdo->lastInsertId();
-			header('Location: ?id='.$cat_id);
+			header('Location:index.php?section=form_categorie&id='.$cat_id);
 			exit;
 		}
 	}
@@ -77,7 +75,8 @@ require 'inc/view/header.php';;
 		<h1>Gestion des catégories</h1>
 		<!-- je mets ce formulaire en method="get" car la donnée n'est pas à sécuriser
 		et car on veut voir ?id=ID dans l'URL de la page pour la modification -->
-		<form action="" method="get">
+		<form action="index.php" method="get">
+                        <input type="hidden" name="section" value="form_categorie" />
 			<select name="id">
 				<option value="0">ajouter une catégorie</option>
 				<!-- je parcours les catégories pour remplir le menu déroulant des catégories -->

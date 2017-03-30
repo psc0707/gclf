@@ -1,38 +1,51 @@
 <?php
+//FRONT Controler
+require dirname(__FILE__).'/inc/config.php';
+//Récupère le paramètre URL section correspondant à la page demandée
+/*
+$section = isset($_GET['section'])?trim($_GET['section']):'';
 
-require 'inc/config.php';
+//print_r($section);
+switch ($section) {
+    case 'catalogue':
+        require dirname(__FILE__).'/inc/controller/catalogue.php';    
+        break;
+    
+    case 'details':
+        require dirname(__FILE__).'/inc/controller/details.php';    
+        break;
+    
+    case 'form_categorie':
+        require dirname(__FILE__).'/inc/controller/form_categorie.php';    
+        break;
+    
+    case 'form_film':
+        require dirname(__FILE__).'/inc/controller/form_film.php';    
+        break;
 
-$categorieList=array();
-$sql = '
-	SELECT categorie.cat_id, cat_nom, count(*) as nb
-	FROM categorie
-	INNER JOIN film ON film.cat_id = categorie.cat_id
-	GROUP BY categorie.cat_id, cat_nom
-	ORDER BY nb DESC
-	LIMIT 0,4
-';
-$pdoStatement = $pdo->query($sql);
-if ($pdoStatement && $pdoStatement->rowCount() > 0) {
-	$categorieList = $pdoStatement->fetchAll();
+    default:
+        require dirname(__FILE__).'/inc/controller/home.php'; 
+        break;
+} 
+ */
+
+$path = isset($_GET['path'])?trim($_GET['path']):'';
+
+//print_r($section);
+if ($path=='catalogue' || $path=='catalogue/') {
+        require dirname(__FILE__).'/inc/controller/catalogue.php';
+            
+}
+else if ($path=='details' || $path=='details/') {    
+        require dirname(__FILE__).'/inc/controller/details.php';    
+            
+} else if ($path=='form_categorie' || $path=='form_categorie/') {    
+        require dirname(__FILE__).'/inc/controller/form_categorie.php';    
+        
+} else if ($path=='form_film' || $path=='form_film/') {            
+        require dirname(__FILE__).'/inc/controller/form_film.php';    
+        
+} else {  
+        require dirname(__FILE__).'/inc/controller/home.php';
 }
 
-require 'inc/view/header.php';;
-?>
-
-<section>
-	<p id="homeItro">GCLF est une superbe et ingénieuse application permettant de gérer la localisation et la recherche de ses copies légales de films</p>
-	<br /><br />
-	<form action="catalogue.php" method="get" id="homeSearch">
-		<input type="text" class="searchInput" placeholder="Titre, acteur, etc." name="q" value="" />
-		<input type="submit" class="searchSubmit" value="Rechercher"/>
-	</form>
-</section>
-<section class="listeCategories">
-	<?php foreach ($categorieList as $curCategorieInfos) : ?>
-	<a href="catalogue.php?cat_id=<?php echo $curCategorieInfos['cat_id']; ?>"><?php echo $curCategorieInfos['cat_nom'].' ('.$curCategorieInfos['nb'].')'; ?></a>&nbsp; &nbsp;
-	<?php endforeach; ?>
-</section>
-
-
-<?php
-require 'inc/view/footer.php';;

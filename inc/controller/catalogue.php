@@ -1,6 +1,6 @@
 <?php
 
-require 'inc/config.php';
+//require 'inc/config.php';
 
 use \Inc\Model\Film;
 

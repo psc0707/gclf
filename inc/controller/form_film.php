@@ -1,7 +1,5 @@
 <?php
 
-require 'inc/config.php';
-
 // Si un formulaire a été soumis
 // Attention, si plusieurs formulaires en POST sur la même page, il va falloir les distinguer
 if (!empty($_POST)) {
@@ -53,7 +51,7 @@ if (!empty($_POST)) {
 		if ($pdoStatement->execute()) {
 			// Je redirige sur la même page
 			// Pas de formulaire soumis sur la page de redirection => pas de POST
-			header('Location: form_film.php?id='.$fil_id);
+			header('Location: index.php?section=form_film&id='.$fil_id);
 			exit;
 		}
 	}
@@ -82,7 +80,7 @@ if (!empty($_POST)) {
 			$newId = $pdo->lastInsertId();
 			// Je redirige sur la même page, à laquelle j'ajoute l'id du film créé => modification
 			// Pas de formulaire soumis sur la page de redirection => pas de POST
-			header('Location: form_film.php?id='.$newId);
+			header('Location: index.php?section=form_film&id='.$newId);
 			exit;
 		}
 	}
@@ -104,7 +102,7 @@ $imdbCategory = '';
 $imdbResultsList = array();
 $noImdbResult = false;
 
-// Si l'id est passé en paramètre de l'URL : "form_film.php?id=54" => $_GET['id'] à pour valeur 54
+// Si l'id est passé en paramètre de l'URL : "index.php?id=54" => $_GET['id'] à pour valeur 54
 if (isset($_GET['id'])) {
 	// Je m'assure que la valeur est un integer
 	$currentId = intval($_GET['id']);
@@ -134,7 +132,7 @@ if (isset($_GET['id'])) {
 	}
 }
 
-// Si un titre de film IMDb est passé en paramètre de l'URL : "form_film.php?imdb=the+matrix" => $_GET['imdb'] à pour valeur "the matrix"
+// Si un titre de film IMDb est passé en paramètre de l'URL : "index.php?imdb=the+matrix" => $_GET['imdb'] à pour valeur "the matrix"
 // => Si une recherche sur le titre IMDb a été effectuée
 if (isset($_GET['imdb'])) {
 	// Je traite la chaine de caractères
@@ -207,7 +205,7 @@ require 'inc/view/header.php';;
 			else if (sizeof($imdbResultsList) > 0) {
 				echo '<br />Résultats :';
 				foreach ($imdbResultsList as $curMovie) {
-					echo ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="?imdb='.urlencode($curMovie->title).'&imdbExact=1">'.$curMovie->title.'</a>';
+					echo ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?= __BASE_URL__ ?>index.php?imdb='.urlencode($curMovie->title).'&imdbExact=1">'.$curMovie->title.'</a>';
 				}
 			}
 			?>

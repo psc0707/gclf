@@ -103,4 +103,56 @@ class Film {
                 return ($pdoStatement->fetchAll());
             }
         }
+        public static function getId($currentId) {
+            global $pdo;        
+            $sql = '
+                    SELECT fil_titre, fil_annee, fil_affiche, fil_synopsis, fil_acteurs, fil_filename, cat_nom, sup_nom
+                    FROM film
+                    INNER JOIN categorie ON categorie.cat_id = film.cat_id
+                    INNER JOIN support ON support.sup_id = film.sup_id
+                    WHERE fil_id = :filId';
+            $pdoStatement = $pdo->prepare($sql);
+            $pdoStatement->bindValue(':filId', $currentId);
+
+            if ($pdoStatement->execute()) {                    
+                    return($pdoStatement->fetch());
+            }            
+
+        }
+        public static function get($currentId) {
+            global $pdo;        
+            $sql = '
+                    SELECT fil_id, fil_titre, fil_annee, fil_affiche, fil_synopsis, fil_acteurs, fil_filename, cat_nom, sup_nom
+                    FROM film
+                    INNER JOIN categorie ON categorie.cat_id = film.cat_id
+                    INNER JOIN support ON support.sup_id = film.sup_id
+                    WHERE fil_id = :filId';
+            $pdoStatement = $pdo->prepare($sql);
+            $pdoStatement->bindValue(':filId', $currentId);
+            
+
+            if ($pdoStatement->execute() === false) {
+                print_pre($pdoStatement->errorInfo());
+            } else {
+                $row = $pdoStatement->fetch(\PDO::FETCH_ASSOC);
+                if (!empty($row)) {
+//$id, $support, $categorie, $titre, $filename, $annee, $affiche, $synopsis, $acteurs, $description                    
+                    $currentObject = new Film(
+                            $row['fil_id'],                            
+                            $row['sup_nom'],
+                            $row['cat_nom'],
+                            $row['fil_titre'],
+                            $row['fil_filename'],
+                            $row['fil_annee'],
+                            $row['fil_affiche'],
+                            $row['fil_synopsis'],
+                            $row['fil_acteurs'],
+                            $row['fil_synopsis']
+                    );
+                    return $currentObject;
+                }
+            }
+            return false;
+            
+            }
 }
